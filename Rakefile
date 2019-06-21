@@ -1,17 +1,20 @@
-require 'active_record'
+require "active_record"
+require_relative "../config/environment"
+Bundler.require
+#require_relative '../config/environment'
 include ActiveRecord::Tasks
 
-DatabaseTasks.db_dir = 'db'
-DatabaseTasks.migrations_paths = ['db/migrate']
+DatabaseTasks.db_dir = "db"
+DatabaseTasks.migrations_paths = ["db/migrate"]
 
-load 'active_record/railties/databases.rake'
+load "active_record/railties/databases.rake"
 
 task :console => :environment do
   Pry.start
 end
 
 task :environment do
-  require_relative 'config/environment'
+  require_relative "config/environment"
 end
 
 Rake::Task["db:drop"].clear
@@ -19,7 +22,7 @@ Rake::Task["db:drop"].clear
 namespace :db do
   task :drop => :environment do
     puts "Dropping tables"
-    File.delete('db/schema.rb')
+    File.delete("db/schema.rb")
     drop_db
   end
 end
